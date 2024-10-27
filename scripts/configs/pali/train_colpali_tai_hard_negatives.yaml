@@ -19,7 +19,7 @@ config:
 #      bnb_4bit_use_double_quant: true
 
   dataset_loading_func: !ext colpali_engine.utils.dataset_transformation.load_tai_hard_negs # load_tai_hard_negs
-  eval_dataset_loader: !import ../data/test_data.yaml
+  eval_dataset_loader: !import ../data/test_data_tai.yaml
 
   max_length: 50
   run_eval: true
