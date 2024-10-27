@@ -175,6 +175,19 @@ def load_docvqa_dataset() -> DatasetDict:
 
     return ds_dict
 
+def load_tai_hard_negs() -> Tuple[DatasetDict, Dataset]:
+    path = "/home/commissarsilver/training_data.jsonl"
+
+    # Load the dataset
+    dataset = cast(Dataset, load_dataset("json", data_files=path, split="train"))
+
+    ds_size = len(dataset)
+    dataset_train = dataset.select(range(0, round(ds_size * 0.8)))
+    dataset_test = dataset.select(range(round(ds_size * 0.8), ds_size))
+
+    ds_dict = DatasetDict({"train": dataset_train, "test": dataset_test})
+
+    return ds_dict, dataset
 
 class TestSetFactory:
     def __init__(self, dataset_path):
