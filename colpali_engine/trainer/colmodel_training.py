@@ -15,7 +15,7 @@ from transformers import (
     TrainingArguments,
 )
 
-from colpali_engine.collators.hard_neg_collator import HardNegCollator
+from colpali_engine.collators.hard_neg_collator import HardNegCollator,TAIHardNegCollator
 from colpali_engine.collators.visual_retriever_collator import VisualRetrieverCollator
 from colpali_engine.loss.late_interaction_losses import (
     ColbertLoss,
@@ -24,6 +24,7 @@ from colpali_engine.trainer.contrastive_trainer import ContrastiveTrainer
 from colpali_engine.trainer.eval_utils import CustomRetrievalEvaluator
 from colpali_engine.utils.gpu_stats import print_gpu_utilization, print_summary
 from colpali_engine.utils.processing_utils import BaseVisualRetrieverProcessor
+from colpali_engine.models import ColPaliProcessor
 
 
 @dataclass
@@ -32,7 +33,7 @@ class ColModelTrainingConfig:
     tr_args: TrainingArguments = None
     output_dir: str = None
     max_length: int = 256
-    run_eval: bool = True
+    run_eval: bool = False
     run_train: bool = True
     peft_config: Optional[LoraConfig] = None
     add_suffix: bool = False
@@ -95,10 +96,13 @@ class ColModelTraining:
         self.config = config
         self.model = self.config.model
         self.dataset = self.config.dataset_loading_func()
+
+        self.config.processor = ColPaliProcessor.from_pretrained(self.config.model.name_or_path)
+
         if isinstance(self.dataset, Tuple):
             neg_dataset = self.dataset[1]
             self.dataset = self.dataset[0]
-            self.collator = HardNegCollator(
+            self.collator = TAIHardNegCollator(
                 processor=self.config.processor,
                 max_length=self.config.max_length,
                 image_dataset=neg_dataset,
@@ -109,7 +113,7 @@ class ColModelTraining:
                 max_length=self.config.max_length,
             )
         self.current_git_hash = os.popen("git rev-parse HEAD").read().strip()
-        self.retrieval_evaluator = CustomRetrievalEvaluator()
+        # self.retrieval_evaluator = CustomRetrievalEvaluator()
 
     def train(self) -> None:
         if isinstance(self.collator, HardNegCollator):
