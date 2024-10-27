@@ -176,7 +176,7 @@ def load_docvqa_dataset() -> DatasetDict:
     return ds_dict
 
 def load_tai_hard_negs() -> Tuple[DatasetDict, Dataset]:
-    path = "/home/commissarsilver/training_data.jsonl"
+    path = "~/training_data.jsonl"
 
     # Load the dataset
     dataset = cast(Dataset, load_dataset("json", data_files=path, split="train"))
