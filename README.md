@@ -33,3 +33,9 @@ Run the following command to fine-tune the model on the TAI dataset.
 ```bash
 USE_LOCAL_DATASET=0 python scripts/train/train_colbert.py scripts/configs/pali/train_colpali_tai_hard_negatives.yaml
 ```
+
+# Evaluation
+A note regarding evaluation:
+
+Colpali's evaluations are done on dataset's that are already processed so that the metrics can be calculated. As this fine-tuning dataset is not directly connected to TAI's database and evluation using `hrs` on the fly is expensive, I have turned off the evaluation in the training script as we don't employ the new model to get the results from TAI's db.
+However, I recommend evaluating the model on some of the MTEB datasets that exist in `scripts/configs/data/test_data_tai.yaml`. The only downside that these datasets are quite large and take a lot of space.
