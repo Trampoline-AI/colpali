@@ -1,0 +1,4 @@
+# eval_dataset_loader:
+TAIRelevanceDataset:
+  (): colpali_engine.utils.dataset_transformation.TestSetFactory
+  dataset_path: !path "/home/commissarsilver/training_data.jsonl"
