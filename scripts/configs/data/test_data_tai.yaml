@@ -1,4 +1,11 @@
 # eval_dataset_loader:
-TAIRelevanceDataset:
+
+syntheticDocQA_government_reports:
   (): colpali_engine.utils.dataset_transformation.TestSetFactory
-  dataset_path: !path "/home/commissarsilver/training_data.jsonl"
+  dataset_path: !path ../../../data_dir/syntheticDocQA_government_reports_test
+syntheticDocQA_energy:
+  (): colpali_engine.utils.dataset_transformation.TestSetFactory
+  dataset_path: !path ../../../data_dir/syntheticDocQA_energy_test
+arxivqa_subsampled:
+  (): colpali_engine.utils.dataset_transformation.TestSetFactory
+  dataset_path: !path ../../../data_dir/arxivqa_test_subsampled
