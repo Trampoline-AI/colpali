@@ -23,7 +23,7 @@ def main(config_file: Path) -> None:
         app.save(config_file=config_file)
     if config.run_eval:
         print("Running evaluation")
-        app.eval()
+        # app.eval()
     print("Done!")
 
 
