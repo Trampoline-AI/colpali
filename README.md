@@ -34,6 +34,13 @@ Run the following command to fine-tune the model on the TAI dataset.
 USE_LOCAL_DATASET=0 python scripts/train/train_colbert.py scripts/configs/pali/train_colpali_tai_hard_negatives.yaml
 ```
 
+# Pushing the Model to Hugging Face
+After fine-tuning the model, you can push the model to Hugging Face using the following script:
+```bash
+python upload_to_hub.py
+```
+you need to set the `repo_id` and the `folder_path` in the script to the correct values.
+
 # Evaluation
 A note regarding evaluation:
 
